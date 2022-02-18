@@ -21,5 +21,7 @@ SoftwareSerial mySerial(2, 3);
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
 void FingerprintInit();
+uint8_t getFingerprintID();
+uint8_t getFingerprintEnroll(uint8_t id);
 
 #endif
