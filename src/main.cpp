@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "firebase/firebase.h"
 #include "fingerprint/fingerprint.h"
 #if defined(ESP32)
@@ -6,8 +5,6 @@
 #elif defined(ESP8266)
 #include <ESP8266WiFi.h>
 #endif
-
-#include <addons/TokenHelper.h>
 
 #define WIFI_SSID "WIFI_AP"
 #define WIFI_PASSWORD "WIFI_PASSWORD"
