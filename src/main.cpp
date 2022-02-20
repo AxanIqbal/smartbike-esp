@@ -6,8 +6,8 @@
 #include <ESP8266WiFi.h>
 #endif
 
-#define WIFI_SSID "WIFI_AP"
-#define WIFI_PASSWORD "WIFI_PASSWORD"
+#define WIFI_SSID "ZONG MBB-E5573-79A8"
+#define WIFI_PASSWORD "43825940"
 
 unsigned long sendDataPrevMillis = 0;
 
@@ -28,6 +28,8 @@ void setup()
   Serial.print("Connected with IP: ");
   Serial.println(WiFi.localIP());
 
+  pinMode(16, OUTPUT); //#D0 Finger lock
+
   wifiServer.begin();
   // firebaseInit();
   FingerprintInit();
@@ -35,30 +37,55 @@ void setup()
 
 void loop()
 {
-  WiFiClient client = wifiServer.available();
-  String command = "";
-  if (client)
-  {
-    while (client.connected())
-    {
-      while (client.available() > 0)
-      {
-        char c = client.read();
 
-        if (c == '\n')
-        {
-          break;
-        }
-        
-        command += c;
-        Serial.write(c);
-      }
-      delay(10);
-      command = "";
-    }
-    client.stop();
-    Serial.println('Client disconnected');
+  if ( getFingerprintID() == 1)
+  {
+    Serial.println("Congrats you are the owner");
+    digitalWrite(16, HIGH);
   }
+  
+
+  // WiFiClient client = wifiServer.available();
+  // String command;
+  
+  // if (client)
+  // {
+  //   while (client.connected())
+  //   {
+  //     command = client.readStringUntil('\n');
+  //     // while (client.available() > 0)
+  //     // {
+        
+  //       // char c = client.read();
+
+  //       // if (c == '\n')
+  //       // {
+  //       //   break;
+  //       // }
+        
+  //       // command += c;
+  //       // Serial.write(c);
+  //     // }
+  //     client.flush();
+  //     delay(10);
+  //     if (command.compareTo(String("AHSAN")) == 13)
+  //     {
+  //       Serial.println("doing the test");
+  //       client.write("doing the test");
+  //     }else if (command != "")
+  //     {
+  //       Serial.println();
+  //       Serial.println(command);
+  //       Serial.println(command.compareTo(String("TAHA")));
+  //       Serial.println();
+  //     }
+      
+  //     getFingerprintID();
+  //     // command = "";
+  //   }
+  //   client.stop();
+  //   Serial.println("Client disconnected");
+  // }
 
   // if (Firebase.ready() && (millis() - sendDataPrevMillis > 15000 || sendDataPrevMillis == 0))
   // {
