@@ -32,60 +32,65 @@ void setup()
 
   wifiServer.begin();
   // firebaseInit();
-  FingerprintInit();
+  // FingerprintInit();
 }
 
 void loop()
 {
 
-  if ( getFingerprintID() == 1)
-  {
-    Serial.println("Congrats you are the owner");
-    digitalWrite(16, HIGH);
-  }
-  
-
-  // WiFiClient client = wifiServer.available();
-  // String command;
-  
-  // if (client)
+  // if ( getFingerprintID() == 1)
   // {
-  //   while (client.connected())
-  //   {
-  //     command = client.readStringUntil('\n');
-  //     // while (client.available() > 0)
-  //     // {
-        
-  //       // char c = client.read();
-
-  //       // if (c == '\n')
-  //       // {
-  //       //   break;
-  //       // }
-        
-  //       // command += c;
-  //       // Serial.write(c);
-  //     // }
-  //     client.flush();
-  //     delay(10);
-  //     if (command.compareTo(String("AHSAN")) == 13)
-  //     {
-  //       Serial.println("doing the test");
-  //       client.write("doing the test");
-  //     }else if (command != "")
-  //     {
-  //       Serial.println();
-  //       Serial.println(command);
-  //       Serial.println(command.compareTo(String("TAHA")));
-  //       Serial.println();
-  //     }
-      
-  //     getFingerprintID();
-  //     // command = "";
-  //   }
-  //   client.stop();
-  //   Serial.println("Client disconnected");
+  //   Serial.println("Congrats you are the owner");
+  //   digitalWrite(16, HIGH);
   // }
+  
+
+  WiFiClient client = wifiServer.available();
+  String command;
+  
+  if (client)
+  {
+    while (client.connected())
+    {
+  //     command = client.readStringUntil('\n');
+      while (client.available() > 0)
+      {
+        
+        char c = client.read();
+
+        if (c == '\n' || int(c) == 13)
+        {
+          break;
+        }
+
+        // if (c == '')
+        // {
+        //   Serial.println("You hace entered space");
+        // }
+        
+        
+        command += c;
+        Serial.print(c);
+      }
+      client.flush();
+      delay(10);
+      if (command.compareTo(String("AHSAN")) == 0)
+      {
+        Serial.println("doing the test");
+        client.write("doing the test");
+      }else if (command != "")
+      {
+        Serial.println();
+        Serial.println(command);
+        Serial.println(command.compareTo(String("TAHA")));
+        Serial.println(command.equals("TAHA"));
+      }
+  //     getFingerprintID();
+      command = "";
+    }
+    client.stop();
+    Serial.println("Client disconnected");
+  }
 
   // if (Firebase.ready() && (millis() - sendDataPrevMillis > 15000 || sendDataPrevMillis == 0))
   // {
