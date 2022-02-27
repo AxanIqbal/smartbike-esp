@@ -2,10 +2,10 @@
 
 #if (defined(__AVR__) || defined(ESP8266)) && !defined(__AVR_ATmega2560__)
 // For UNO and others without hardware serial, we must use software serial...
-// pin #D5 is IN from sensor (YELLOW wire) == TX
-// pin #D6 is OUT from arduino  (WHITE wire) == RX
+// pin #D4 is IN from sensor (YELLOW wire) == TX
+// pin #RX is OUT from arduino  (WHITE wire) == RX
 // Set up the serial port to use softwareserial..
-SoftwareSerial mySerial(14, 12);
+SoftwareSerial mySerial(2, 3);
 
 #else
 // On Leonardo/M0/etc, others with hardware serial, use hardware serial!
@@ -320,22 +320,33 @@ uint8_t getFingerprintEnroll(uint8_t id)
     return true;
 }
 
-uint8_t deleteFingerprint(uint8_t id) {
-  uint8_t p = -1;
+uint8_t deleteFingerprint(uint8_t id)
+{
+    uint8_t p = -1;
 
-  p = finger.deleteModel(id);
+    p = finger.deleteModel(id);
 
-  if (p == FINGERPRINT_OK) {
-    Serial.println("Deleted!");
-  } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
-    Serial.println("Communication error");
-  } else if (p == FINGERPRINT_BADLOCATION) {
-    Serial.println("Could not delete in that location");
-  } else if (p == FINGERPRINT_FLASHERR) {
-    Serial.println("Error writing to flash");
-  } else {
-    Serial.print("Unknown error: 0x"); Serial.println(p, HEX);
-  }
+    if (p == FINGERPRINT_OK)
+    {
+        Serial.println("Deleted!");
+    }
+    else if (p == FINGERPRINT_PACKETRECIEVEERR)
+    {
+        Serial.println("Communication error");
+    }
+    else if (p == FINGERPRINT_BADLOCATION)
+    {
+        Serial.println("Could not delete in that location");
+    }
+    else if (p == FINGERPRINT_FLASHERR)
+    {
+        Serial.println("Error writing to flash");
+    }
+    else
+    {
+        Serial.print("Unknown error: 0x");
+        Serial.println(p, HEX);
+    }
 
-  return p;
+    return p;
 }
