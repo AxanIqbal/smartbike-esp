@@ -3,9 +3,9 @@
 #if (defined(__AVR__) || defined(ESP8266)) && !defined(__AVR_ATmega2560__)
 // For UNO and others without hardware serial, we must use software serial...
 // pin #D4 is IN from sensor (YELLOW wire) == TX
-// pin #RX is OUT from arduino  (WHITE wire) == RX
+// pin #RX is OUT from arduino (WHITE wire) == RX
 // Set up the serial port to use softwareserial..
-SoftwareSerial mySerial(2, 3);
+SoftwareSerial mySerial(D6, 3);
 
 #else
 // On Leonardo/M0/etc, others with hardware serial, use hardware serial!
@@ -32,7 +32,7 @@ void FingerprintInit()
     else
     {
         Serial.println("Did not find fingerprint sensor :(");
-        delay(1000);
+        delay(500);
         FingerprintInit();
     }
 
