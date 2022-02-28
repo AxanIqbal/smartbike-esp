@@ -31,10 +31,11 @@ void setup()
   // Connect to Wi-Fi
 
   // Hardware Configs
-  pinMode(shockSensor, INPUT);
-  pinMode(sosCancel, INPUT);
-  pinMode(chargingPin, INPUT);
+  // pinMode(shockSensor, INPUT);
+  // pinMode(sosCancel, INPUT);
+  // pinMode(chargingPin, OUTPUT);
   pinMode(lockPin, OUTPUT);
+  digitalWrite(lockPin, HIGH);
 
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED)
@@ -56,19 +57,27 @@ void setup()
 
 void loop()
 {
-  ws.cleanupClients();
-  notifyClients();
-  hardwareLoop();
+  // digitalWrite(lockPin, 1);
+  // digitalWrite(chargingPin, 0);
+  // Serial.println("HIGH");
+  // delay(10000);
+  // ws.cleanupClients();
+  // notifyClients();
+  // hardwareLoop();
+  // Serial.println("Fingerprint");
   if (getFingerprintID() == 1)
   {
+    Serial.println("Owner Detected");
     if (fingerLock == 0)
     {
-      digitalWrite(lockPin, HIGH);
+      Serial.println("Going LOW");
+      digitalWrite(lockPin, LOW);
       fingerLock = 1;
     }
     else
     {
-      digitalWrite(lockPin, LOW);
+      Serial.println("Going HIGH");
+      digitalWrite(lockPin, HIGH);
       fingerLock = 0;
     }
   }
